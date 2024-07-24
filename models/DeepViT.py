@@ -1,10 +1,14 @@
 from PIL import Image
 import torch
-from transformers import AutoImageProcessor, ViTForImageClassification
+from transformers import AutoImageProcessor, ViTForImageClassification,  TrainingArguments, Trainer
+from sklearn.metrics import accuracy_score
+import numpy as np
+
 class DeepViT():
     def __init__(self, weights = "artifacts/vit_deepfakes_large.pth"):
         self.model = self.load_model(weights)
         self.process = AutoImageProcessor.from_pretrained("google/vit-base-patch16-224")
+        self.trainer = None
         self.id2label = {0 : 'fake', 1 : "real"}
         self.label2id = {'fake' : 0, 'real' : 1}
 
@@ -31,4 +35,54 @@ class DeepViT():
             return predicted_label
         else:
             return self.model.config.id2label[predicted_label]
+
+
+    def set_trainer(self, train_dataset, test_dataset, epoches = 3, train_batch_size = 128):
+
+        metric_name = "accuracy"
+
+        args = TrainingArguments(
+            f"test-deefakes_large",
+            save_strategy="epoch",
+            evaluation_strategy="epoch",
+            learning_rate=2e-5,
+            per_device_train_batch_size=train_batch_size,
+            per_device_eval_batch_size=4,
+            num_train_epochs=epoches,
+            weight_decay=0.01,
+            load_best_model_at_end=True,
+            metric_for_best_model=metric_name,
+            logging_dir='logs',
+            remove_unused_columns=False,
+        )
+
+        trainer = Trainer(
+            self.model,
+            args,
+            train_dataset=train_dataset,
+            eval_dataset=test_dataset,
+            compute_metrics=self.compute_metrics,
+            data_collator=self.collate_fn,
+            tokenizer=self.process,
+        )
+
+        return trainer
+
+    def train(self):
+        self.trainer.train()
+
+    def predict_batch(self, dataset):
+        return self.trainer.predict(dataset)
+
+    def compute_metrics(self, eval_pred):
+        predictions, labels = eval_pred
+        predictions = np.argmax(predictions, axis=1)
+        return dict(accuracy=accuracy_score(predictions, labels))
+
+    def collate_fn(examples):
+        pixel_values = torch.stack([example[0] for example in examples])
+        labels = torch.tensor([example[1] for example in examples])
+        return {"pixel_values": pixel_values, "labels": labels}
+
+
 
