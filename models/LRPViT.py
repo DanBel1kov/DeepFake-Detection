@@ -21,7 +21,7 @@ def init_model(pretrained = True):
         model.load_state_dict(torch.load('artifacts/vit_lrp2.pth'))
     return model
 class LRPViT():
-    """All images should be preprocessed with the transform in the beginning of the file (execpt get_cam method) """
+    """All images should be preprocessed with the transform in the beginning of the file (execpt get_cam and predict methods) """
 
     def __init__(self, pretrained = True):
         """Setting use_thresholding to True makes LRP red and blue colors, where
