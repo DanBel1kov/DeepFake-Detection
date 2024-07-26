@@ -1,1 +1,3 @@
 artifacts/vit_deepfakes_large.pth
+.DS_Store
+.idea
