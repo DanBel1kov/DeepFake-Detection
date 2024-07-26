@@ -1,3 +1,7 @@
 artifacts/vit_deepfakes_large.pth
+<<<<<<< HEAD
 .DS_Store
 .idea
+=======
+artifacts/vit_lrp2.pth
+>>>>>>> c8ebec55de6ba7e5ff715938be526d506f27340a
