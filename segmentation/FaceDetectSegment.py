@@ -8,6 +8,7 @@ from autodistill.core.composed_detection_model import ComposedDetectionModel
 from autodistill.detection import CaptionOntology
 from autodistill_clip import CLIP
 from autodistill_grounded_sam import GroundedSAM
+from PIL import Image
 
 
 def ConvertImageToGRAY(image: np.ndarray) -> np.ndarray:
