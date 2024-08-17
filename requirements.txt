@@ -52,3 +52,14 @@ transformers==4.43.1
 triton==3.0.0
 typing_extensions==4.12.2
 urllib3==2.2.2
+autodistill
+autodistill_clip
+autodistill_grounded_sam
+numpy
+opencv-python
+pillow
+roboflow
+supervision
+tqdm
+pycocotools
+scikit-image
