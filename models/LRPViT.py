@@ -42,7 +42,8 @@ class LRPViT():
 
     def get_cam(self, img, class_index=0):
         """ Main function that gives red and blue regions for predicted image ( red is fake with class_index = 0)
-        Input: PIL image and class_index to visualize: 0 - Fake, 1 - Real"""
+        Input: PIL image and class_index to visualize: 0 - Fake, 1 - Real
+        """
 
         img = transform(img)
         transformer_attribution = self.attribution_generator.generate_LRP(img.unsqueeze(0).cuda(), method="transformer_attribution", index=class_index).detach()
