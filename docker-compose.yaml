@@ -1,0 +1,7 @@
+services:
+  ml:
+    image: ghcr.io/pshakhmin/deeepfake_detection:latest
+    environment:
+      - RABBITMQ_PASSWORD=hellovkfromdsba
+      - RABBITMQ_USERNAME=user1
+      - RABBITMQ_HOST=pshakhmin.ru
