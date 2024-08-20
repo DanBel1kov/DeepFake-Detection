@@ -50,14 +50,9 @@ class LRPViT:
         return prob.argmax().item(), prob[0][0].item()
 
     def get_cam(self, img, class_index=0):
-<<<<<<< HEAD
         """ Main function that gives red and blue regions for predicted image ( red is fake with class_index = 0)
         Input: PIL image and class_index to visualize: 0 - Fake, 1 - Real
         """
-=======
-        """Main function that gives red and blue regions for predicted image ( red is fake with class_index = 0)
-        Input: PIL image and class_index to visualize: 0 - Fake, 1 - Real"""
->>>>>>> fe1d67fde32f539a453e99b1ffe4988469d042ee
 
         img = transform(img)
         transformer_attribution = self.attribution_generator.generate_LRP(
