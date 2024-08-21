@@ -69,7 +69,7 @@ class FaceSeg:
         """
         self.SegmentImage()
         self.RemoveIntersections()
-        self.DeleteNoize()
+        # self.DeleteNoize()
         return self.MASKS
 
     def SaveMasks(self):
